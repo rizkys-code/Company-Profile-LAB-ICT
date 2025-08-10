@@ -288,34 +288,44 @@ h3::after {
 
 
 /* ================================================== */
-/* ===== GAYA PORTFOLIO DIPERBAIKI (MASONRY) ===== */
+/* ===== GAYA PORTFOLIO BARU (ADVANCED GRID) ===== */
 /* ================================================== */
 .portfolio .portfolio-grid {
-    /* Mengganti Grid dengan CSS Columns */
-    column-count: 3; /* Default untuk desktop */
-    column-gap: 1.5rem;
+    display: grid;
+    /* Membuat grid dengan 3 kolom yang sama lebar */
+    grid-template-columns: repeat(3, 1fr);
+    /* Mengatur tinggi baris otomatis agar fleksibel */
+    grid-auto-rows: 250px;
+    gap: 1.5rem;
 }
 
 .portfolio .portfolio-item {
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 15px; /* Dibuat lebih melengkung */
     box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-    margin-bottom: 1.5rem; /* Jarak vertikal antar item */
-    break-inside: avoid; /* KUNCI: Mencegah gambar terpotong di antara kolom */
-    width: 100%; 
+}
+
+/* Membuat item dengan kelas 'wide' memanjang 2 kolom */
+.portfolio .portfolio-item.wide {
+    grid-column: span 2;
+}
+
+/* Membuat item dengan kelas 'tall' memanjang 2 baris */
+.portfolio .portfolio-item.tall {
+    grid-row: span 2;
 }
 
 .portfolio .portfolio-item img {
     width: 100%;
-    height: auto; /* Kunci agar rasio aspek gambar benar */
+    height: 100%;
+    object-fit: cover; /* Kunci agar gambar mengisi ruang tanpa gepeng */
     display: block;
     transition: transform 0.5s ease;
 }
 
-
 .portfolio .portfolio-item:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05); /* Efek zoom lebih halus */
 }
 
 .portfolio .overlay {
@@ -328,7 +338,7 @@ h3::after {
     justify-content: flex-end;
     align-items: flex-start;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1.5rem; /* Padding lebih kecil untuk judul */
     opacity: 0;
     transition: opacity 0.5s ease;
 }
@@ -349,6 +359,8 @@ h3::after {
     transform: translateY(0);
     opacity: 1;
 }
+/* ================================================== */
+
 
 /* --- Kontak --- */
 .contact form {
@@ -445,7 +457,7 @@ footer {
 @media(max-width: 1024px) {
     /* Mengubah jumlah kolom portfolio untuk tablet */
     .portfolio .portfolio-grid {
-        column-count: 2;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -487,7 +499,15 @@ footer {
 
     /* Mengubah jumlah kolom portfolio untuk mobile */
     .portfolio .portfolio-grid {
-        column-count: 1;
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: 300px; /* Tinggi baris di mobile */
+    }
+
+    /* Mengatur ulang item span di mobile agar tidak berantakan */
+    .portfolio .portfolio-item.wide,
+    .portfolio .portfolio-item.tall {
+        grid-column: span 1;
+        grid-row: span 1;
     }
 
     .hero h2 {
