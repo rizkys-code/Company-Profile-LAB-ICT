@@ -364,6 +364,7 @@ h3::after {
     border-radius: 8px;
     color: var(--light-slate);
     font-family: var(--font-sans);
+    resize: none;
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
