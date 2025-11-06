@@ -1,14 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
 
 :root {
+  /* Existing Colors */
   --dark-navy: #0a192f;
   --navy: #112240;
   --light-navy: #233554;
   --slate: #8892b0;
   --light-slate: #ccd6f6;
-  --primary-color: #56ccf2;
+  --primary-color: #56ccf2; /* Bright Sky Blue */
   --white: #e6f1ff;
   --font-sans: "Poppins", sans-serif;
+
+  /* New Colorful Palette */
+  --accent-orange: #ff7f50; /* Coral */
+  --accent-purple: #9370db; /* Medium Purple */
+  --accent-green: #3cb371; /* Medium Sea Green */
+  --bg-gradient-start: #0f2027; /* Darker tone for gradient start */
+  --bg-gradient-end: #203a43; /* Slightly lighter tone for gradient end */
+  --card-bg-light: rgba(45, 65, 95, 0.7); /* Lighter card background */
+  --card-bg-dark: rgba(20, 35, 60, 0.8); /* Darker card background */
+  --text-primary: var(--white);
+  --text-secondary: var(--light-slate);
+  --text-accent: var(--primary-color);
+  --border-light: rgba(86, 204, 242, 0.4);
 }
 
 * {
@@ -22,24 +38,21 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  background-color: var(--dark-navy);
-  color: var(--slate);
+  font-family: 'Montserrat', var(--font-sans); /* Using Montserrat for headings/titles, Poppins for body */
+  line-height: 1.7; /* Slightly increased line-height for readability */
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); /* Gradient background */
+  color: var(--text-secondary);
   position: relative;
   overflow-x: hidden;
 }
 
+/* Aura background effect - enhanced */
 @keyframes move-aura {
-  0% {
-    transform: translate(20vw, -40vh) rotate(0deg);
-  }
-  50% {
-    transform: translate(60vw, 40vh) rotate(180deg);
-  }
-  100% {
-    transform: translate(20vw, -40vh) rotate(360deg);
-  }
+  0% { transform: translate(10vw, -30vh) rotate(0deg) scale(1); opacity: 0.3; }
+  25% { transform: translate(70vw, 20vh) rotate(90deg) scale(1.1); opacity: 0.4; }
+  50% { transform: translate(30vw, 80vh) rotate(180deg) scale(1.2); opacity: 0.5; }
+  75% { transform: translate(-10vw, 40vh) rotate(270deg) scale(1.1); opacity: 0.4; }
+  100% { transform: translate(10vw, -30vh) rotate(360deg) scale(1); opacity: 0.3; }
 }
 
 body::before {
@@ -47,41 +60,67 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
+  width: 1000px; /* Larger aura */
+  height: 1000px;
+  background: radial-gradient(circle, rgba(86, 204, 242, 0.2), transparent 70%); /* More subtle blue aura */
+  border-radius: 50%;
+  filter: blur(150px); /* More blur */
+  z-index: -1;
+  animation: move-aura 40s infinite linear alternate; /* Slower, oscillating animation */
+}
+
+/* Secondary aura for more depth */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  right: 0;
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(86, 204, 242, 0.15), transparent 60%);
+  background: radial-gradient(circle, rgba(147, 112, 219, 0.15), transparent 65%); /* Purple aura */
   border-radius: 50%;
-  filter: blur(120px);
+  filter: blur(130px);
   z-index: -1;
-  animation: move-aura 30s infinite linear;
+  animation: move-aura 35s infinite linear reverse alternate; /* Different animation direction */
 }
 
 .shape-1,
 .shape-2 {
   position: absolute;
   border-radius: 50%;
-  background: rgba(35, 53, 84, 0.5);
+  background: rgba(var(--light-navy), 0.6); /* Slightly more opaque */
   z-index: -1;
-  transition: transform 0.5s ease-out;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out; /* Smoother transition */
+  animation: pulse-shapes 10s infinite alternate;
 }
 
+@keyframes pulse-shapes {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.05); opacity: 0.8; }
+}
+
+
 .shape-1 {
-  width: 250px;
-  height: 250px;
-  top: 20%;
-  left: 10%;
+  width: 300px; /* Larger */
+  height: 300px;
+  top: 15%;
+  left: 5%;
+  background: rgba(var(--accent-green), 0.2); /* Green tint */
+  filter: blur(80px);
 }
 
 .shape-2 {
-  width: 180px;
-  height: 180px;
-  bottom: 15%;
-  right: 15%;
+  width: 220px; /* Larger */
+  height: 220px;
+  bottom: 10%;
+  right: 8%;
+  background: rgba(var(--accent-orange), 0.2); /* Orange tint */
+  filter: blur(70px);
 }
 
 .container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px; /* Slightly wider container */
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
@@ -90,44 +129,53 @@ body::before {
   z-index: 2;
 }
 
+/* Header Styling */
 header {
-  position: fixed;
+  position: sticky; /* Changed to sticky for better visibility on scroll */
   width: 100%;
   top: 0;
   z-index: 1000;
   padding: 1rem 0;
-  background: rgba(10, 25, 47, 0.85);
-  backdrop-filter: blur(10px);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(10, 25, 47, 0.9); /* Slightly more opaque */
+  backdrop-filter: blur(15px); /* Stronger blur */
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  border-bottom: 1px solid rgba(86, 204, 242, 0.1); /* Subtle border */
 }
 
 header.scrolled {
   background-color: var(--navy);
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on scroll */
 }
 
 header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 100%; /* Mengizinkan kontainer header selebar layar */
-  padding-left: 2.5rem; /* Memberi jarak dari tepi kiri layar */
-  padding-right: 2.5rem; /* Memberi jarak dari tepi kanan layar */
+  max-width: 100%;
+  padding-left: 3rem; /* Increased padding */
+  padding-right: 3rem; /* Increased padding */
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  color: var(--primary-color);
+  gap: 0.75rem; /* Reduced gap for a tighter look */
+  color: var(--text-primary); /* Changed logo color to white */
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* Slightly larger logo text */
   font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: var(--primary-color);
 }
 
 .logo img {
-  height: 70px;
+  height: 60px; /* Slightly smaller logo image */
   width: auto;
+  filter: drop-shadow(0 0 5px rgba(86, 204, 242, 0.5)); /* Added a subtle shadow to the logo */
 }
 
 header nav ul {
@@ -136,67 +184,70 @@ header nav ul {
 }
 
 header nav ul li {
-  margin-left: 2rem;
+  margin-left: 2.5rem; /* Increased margin between nav items */
 }
 
 header nav ul li a {
-  color: var(--light-slate);
+  color: var(--text-secondary);
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 500; /* Slightly bolder nav links */
   position: relative;
-  padding-bottom: 5px;
+  padding-bottom: 7px; /* More padding for underline effect */
   transition: color 0.3s ease;
 }
 
 header nav ul li a:hover {
-  color: var(--primary-color);
+  color: var(--text-primary); /* Links turn white on hover */
 }
 
 header nav ul li a::after {
   content: "";
   position: absolute;
   width: 0;
-  height: 2px;
+  height: 3px; /* Thicker underline */
   bottom: 0;
   left: 0;
   background-color: var(--primary-color);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease-out; /* Smoother underline animation */
 }
 
 header nav ul li a:hover::after {
   width: 100%;
 }
 
+/* CTA Button Styling */
 .cta-button {
   display: inline-block;
-  padding: 0.8rem 2rem;
-  background-color: transparent;
-  border: 2px solid var(--primary-color);
-  border-radius: 5px;
-  color: var(--primary-color);
+  padding: 0.9rem 2.2rem; /* Slightly larger padding */
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-purple)); /* Gradient background */
+  border: none; /* No border needed with gradient */
+  border-radius: 8px; /* More rounded corners */
+  color: var(--dark-navy); /* Dark text for contrast */
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 1.05rem; /* Slightly larger font */
+  font-weight: 700; /* Bolder text */
+  letter-spacing: 0.05em; /* Added letter spacing */
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(86, 204, 242, 0.4); /* Stronger initial shadow */
 }
 
 .cta-button:hover {
-  background-color: var(--primary-color);
-  color: var(--dark-navy);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(86, 204, 242, 0.2);
+  background: linear-gradient(45deg, var(--accent-purple), var(--primary-color)); /* Reverse gradient on hover */
+  color: var(--white); /* White text on hover */
+  transform: translateY(-7px) scale(1.02); /* More pronounced lift and slight scale */
+  box-shadow: 0 15px 35px rgba(147, 112, 219, 0.5); /* Shadow changes to purple accent */
 }
 
 .cta-button:active {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(86, 204, 242, 0.2);
+  transform: translateY(-3px) scale(0.98);
+  box-shadow: 0 7px 15px rgba(86, 204, 242, 0.3);
 }
 
 main > section {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: 7rem; /* More vertical padding */
+  padding-bottom: 7rem;
   background: transparent;
-  border-bottom: 1px solid var(--light-navy);
+  border-bottom: 1px solid rgba(var(--light-navy), 0.3); /* More subtle border */
 }
 
 main > section:last-of-type {
@@ -204,12 +255,14 @@ main > section:last-of-type {
 }
 
 h3 {
-  font-size: 2.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem); /* Responsive font size */
   text-align: center;
-  color: var(--white);
-  margin-bottom: 3rem;
+  color: var(--text-primary);
+  margin-bottom: 3.5rem; /* Increased margin */
   position: relative;
-  padding-bottom: 1rem;
+  padding-bottom: 1.2rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Text shadow for depth */
 }
 
 h3::after {
@@ -218,122 +271,149 @@ h3::after {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background-color: var(--primary-color);
+  width: 90px; /* Wider underline */
+  height: 4px; /* Thicker underline */
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-orange)); /* Gradient underline */
+  border-radius: 2px;
 }
 
+/* Hero Section */
 .hero {
   min-height: 100vh;
   display: flex;
+  flex-direction: column; /* Mengatur konten hero dalam kolom */
   align-items: center;
-  padding-top: 80px;
+  justify-content: center;
+  padding-top: 100px; /* Adjusted for sticky header */
   position: relative;
   overflow: hidden;
+  text-align: center; /* Center align hero content by default */
 }
 
 .hero .container {
-  max-width: 1200px;
-}
-
-.hero-content {
+  max-width: 1000px;
   display: flex;
+  flex-direction: column; /* Kontainer hero juga dalam kolom */
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.hero-text {
-  flex: 1 1 55%;
-  text-align: left;
-}
-
-.hero-3d-object {
-  flex: 1 1 45%;
-  min-height: 400px;
-  position: relative;
-  z-index: 2;
-  display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.hero-3d-object img {
-  width: 100%;
-  height: auto;
-  max-width: 450px;
-  object-fit: contain;
 }
 
 .hero h2 {
-  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem); /* Larger and more responsive */
+  color: var(--text-primary);
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
 }
 
 .hero p {
-  font-size: 1.2rem;
-  color: var(--slate);
-  max-width: 600px;
-  margin-bottom: 2rem;
+  font-size: 1.3rem; /* Slightly larger text */
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto; /* Centered paragraph */
 }
 
+/* New CSS for the hero illustration */
+.hero-illustration {
+  max-width: 400px; /* Atur lebar maksimum */
+  height: auto;
+  margin: 3rem auto; /* Beri ruang di atas dan bawah, dan pusatkan */
+  display: block; /* Pastikan ia menjadi elemen blok untuk margin auto */
+  filter: drop-shadow(0 0 20px rgba(86, 204, 242, 0.5)); /* Sesuaikan warna glow dengan primary-color */
+  transition: transform 0.5s ease-out;
+}
+
+.hero-illustration:hover {
+  transform: scale(1.05); /* Sedikit membesar saat di-hover */
+}
+
+
+/* About Section */
+.about p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Services Section */
 .services .service-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly wider cards */
+  gap: 2.5rem; /* Increased gap */
 }
 
 .services .card {
-  background: rgba(35, 53, 84, 0.5);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(86, 204, 242, 0.2);
-  border-radius: 15px;
-  padding: 2.5rem 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--card-bg-light); /* Lighter card background */
+  backdrop-filter: blur(12px); /* Stronger blur */
+  border: 1px solid var(--border-light); /* Lighter border */
+  border-radius: 20px; /* More rounded corners */
+  padding: 3rem; /* Increased padding */
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .services .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  transform: translateY(-15px) scale(1.02); /* More pronounced lift and scale */
+  box-shadow: 0 15px 40px rgba(86, 204, 242, 0.3); /* Blue shadow on hover */
+  background: var(--card-bg-dark); /* Darker on hover */
 }
 
 .services .card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem; /* Larger icons */
+  margin-bottom: 1.5rem;
+  color: var(--primary-color); /* Primary color for icons */
+  text-shadow: 0 0 10px rgba(86, 204, 242, 0.6);
 }
 
 .services .card h4 {
-  font-size: 1.4rem;
-  color: var(--white);
-  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem; /* Larger heading */
+  color: var(--text-primary);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.03em;
 }
 
+.services .card p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Portfolio Section */
 .portfolio .portfolio-grid {
   column-count: 3;
-  column-gap: 1.5rem;
+  column-gap: 2rem; /* Increased gap */
 }
 
 .portfolio .portfolio-item {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
-  margin-bottom: 1.5rem;
+  border-radius: 15px; /* More rounded */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  margin-bottom: 2rem; /* Increased margin */
   break-inside: avoid;
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio .portfolio-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(86, 204, 242, 0.4); /* Blue shadow on hover */
 }
 
 .portfolio .portfolio-item img {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s ease; /* Slower transition */
 }
 
 .portfolio .portfolio-item:hover img {
-  transform: scale(1.1);
+  transform: scale(1.15) rotate(2deg); /* More dynamic hover effect */
 }
 
 .portfolio .overlay {
@@ -345,8 +425,8 @@ h3::after {
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  padding: 2rem;
-  background: linear-gradient(to top, rgba(17, 34, 64, 0.95), transparent);
+  padding: 2.5rem; /* Increased padding */
+  background: linear-gradient(to top, rgba(17, 34, 64, 0.98), transparent 70%); /* Stronger gradient */
   opacity: 0;
   transition: opacity 0.5s ease;
 }
@@ -356,11 +436,13 @@ h3::after {
 }
 
 .overlay h4 {
-  font-size: 1.5rem;
-  color: var(--primary-color);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.7rem; /* Larger text */
+  color: var(--accent-orange); /* Orange accent for title */
   opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.5s ease 0.2s, opacity 0.5s ease 0.2s;
+  transform: translateY(30px); /* More pronounced slide up */
+  transition: transform 0.6s ease 0.2s, opacity 0.6s ease 0.2s;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .portfolio .portfolio-item:hover .overlay h4 {
@@ -368,41 +450,46 @@ h3::after {
   transform: translateY(0);
 }
 
+/* Contact Form */
 .contact form {
   max-width: 700px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.8rem; /* Increased gap */
 }
 
 .contact input,
 .contact textarea,
 .contact select {
   width: 100%;
-  padding: 1rem;
+  padding: 1.2rem 1.5rem; /* Increased padding */
   color: var(--light-slate);
   font-family: var(--font-sans);
-  background-color: rgba(35, 53, 84, 0.5);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: var(--light-slate);
-  font-family: var(--font-sans);
-  resize: none;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background-color: var(--card-bg-dark); /* Darker background */
+  border: 2px solid transparent; /* Thicker initial border */
+  border-radius: 10px; /* More rounded */
+  resize: vertical; /* Allow vertical resize for textarea */
+  min-height: 60px; /* Minimum height for inputs */
+  transition: border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+  font-size: 1rem;
+}
+
+.contact textarea {
+  min-height: 150px; /* Larger text area */
 }
 
 .contact select option {
-  background-color: #223553;
+  background-color: var(--light-navy);
   color: var(--light-slate);
   font-family: var(--font-sans);
   padding: 0.75rem 1rem;
   cursor: pointer;
 }
 
-.contact select option:hover {
-  background-color: var(--primary-color);
-  color: #fff;
+.contact select option:checked { /* Style for selected option */
+    background-color: var(--primary-color);
+    color: var(--dark-navy);
 }
 
 .contact input:focus,
@@ -410,67 +497,81 @@ h3::after {
 .contact select:focus {
   outline: none;
   border-color: var(--primary-color);
-  background-color: rgba(35, 53, 84, 0.7);
+  background-color: rgba(35, 53, 84, 0.9); /* Darker on focus */
+  box-shadow: 0 0 15px rgba(86, 204, 242, 0.5); /* Blue shadow on focus */
 }
 
+/* Recruitment Section */
 .recruitment-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  max-width: 900px;
+  margin: auto;
 }
 
 .recruitment-content img {
   max-width: 100%;
-  width: 500px;
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  width: 600px; /* Larger image */
+  border-radius: 20px; /* More rounded corners */
+  margin-bottom: 3rem; /* Increased margin */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+  transition: transform 0.4s ease;
+}
+
+.recruitment-content img:hover {
+  transform: scale(1.03);
 }
 
 .recruitment-content p {
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin-bottom: 2rem;
+  font-size: 1.15rem; /* Slightly larger text */
+  max-width: 700px;
+  margin-bottom: 3rem;
+  color: var(--text-secondary);
 }
 
+/* Footer Styling */
 footer {
-  padding: 2.5rem 0;
-  margin-top: 4rem;
+  padding: 3rem 0; /* More padding */
+  margin-top: 5rem; /* Increased margin */
   text-align: center;
   color: var(--slate);
-  font-size: 0.9rem;
+  font-size: 1rem; /* Slightly larger font */
   background-color: transparent;
+  border-top: 1px solid rgba(86, 204, 242, 0.1); /* Subtle top border */
 }
 
 footer .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem; /* Increased gap */
 }
 
 .social-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem; /* Increased gap */
 }
 
 .social-links a svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--slate);
-  stroke-width: 1.5;
-  transition: stroke 0.3s ease;
+  width: 28px; /* Larger icons */
+  height: 28px;
+  stroke: var(--light-slate); /* Lighter initial stroke */
+  stroke-width: 1.8; /* Thicker stroke */
+  transition: stroke 0.3s ease, transform 0.3s ease;
 }
 
 .social-links a:hover svg {
   stroke: var(--primary-color);
+  transform: translateY(-5px) scale(1.1); /* Lift and scale on hover */
 }
 
+/* Fade-in Animation */
 .fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(40px); /* More pronounced initial position */
+  transition: opacity 1s ease-out, transform 1s ease-out; /* Slower and smoother transition */
 }
 
 .fade-in.visible {
@@ -478,6 +579,7 @@ footer .container {
   transform: translateY(0);
 }
 
+/* Hamburger Menu */
 .hamburger {
   display: none;
   background: none;
@@ -485,69 +587,85 @@ footer .container {
   cursor: pointer;
   position: relative;
   z-index: 1010;
+  padding: 10px;
 }
 
 .hamburger span {
   display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px 0;
+  width: 30px; /* Wider hamburger lines */
+  height: 4px; /* Thicker hamburger lines */
+  margin: 6px 0; /* Increased margin */
   background-color: var(--primary-color);
+  border-radius: 2px;
   transition: all 0.3s ease-in-out;
 }
 
+.hamburger.active span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
   .portfolio .portfolio-grid {
     column-count: 2;
   }
+  header .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 @media (max-width: 820px) {
-  .hero-content {
-    flex-direction: column;
+  .hero {
     text-align: center;
   }
 
-  .hero-text {
-    order: 2;
-  }
-
-  .hero-3d-object {
-    order: 1;
-    width: 100%;
-    max-width: 400px;
-    min-height: 300px;
-  }
-
   .hero h2 {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
   }
 
   .hero p {
-    font-size: 1rem;
-    max-width: 100%;
+    font-size: 1.1rem;
+  }
+
+  .services .service-cards {
+    grid-template-columns: 1fr;
+  }
+  .services .card {
+    padding: 2.5rem;
+  }
+  .recruitment-content img {
+    width: 100%;
+    max-width: 450px;
   }
 }
 
 @media (max-width: 768px) {
   h3 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
   }
 
   header nav {
     position: fixed;
     top: 0;
     right: 0;
-    width: min(75vw, 400px);
+    width: min(80vw, 400px); /* Slightly wider on mobile */
     height: 100vh;
-    background: var(--light-navy);
+    background: var(--dark-navy); /* Darker background for mobile menu */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease-in-out; /* Slower transition */
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.4); /* Stronger shadow */
     z-index: 1005;
   }
 
@@ -558,11 +676,14 @@ footer .container {
   header nav ul {
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem; /* Increased gap */
   }
 
   header nav ul li {
     margin-left: 0;
+  }
+  header nav ul li a {
+    font-size: 1.3rem; /* Larger font for mobile nav */
   }
 
   .hamburger {
@@ -571,5 +692,47 @@ footer .container {
 
   .portfolio .portfolio-grid {
     column-count: 1;
+  }
+
+  main > section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .logo img {
+    height: 50px;
+  }
+  .logo span {
+    font-size: 1.4rem;
+  }
+  .cta-button {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.95rem;
+  }
+
+  /* Sesuaikan media query jika perlu untuk ukuran ikon di perangkat mobile */
+  .hero-illustration {
+    max-width: 280px; /* Lebih kecil di perangkat mobile */
+    margin: 2rem auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h2 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  h3 {
+    font-size: 1.8rem;
+  }
+  .services .card h4 {
+    font-size: 1.4rem;
+  }
+  .portfolio .overlay h4 {
+    font-size: 1.4rem;
+  }
+  .hero-illustration {
+    max-width: 220px; /* Lebih kecil lagi di ponsel */
   }
 }
